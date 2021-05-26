@@ -15,6 +15,9 @@ class CreateDistritosTable extends Migration
     {
         Schema::create('distritos', function (Blueprint $table) {
             $table->id();
+            $table->string('nom_distrito');
+            $table->unsignedBigInteger('provincia_id')->nullable();
+            $table->foreign('provincia_id')->references('id')->on('provincias')->onDelete('set null');
             $table->timestamps();
         });
     }

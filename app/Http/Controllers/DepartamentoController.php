@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Resources\Departamento as DepartamentoResource;
 
-class DepartamentoController extends Controller
+class DepartamentoController extends BaseController
 {
     public function index()
     {

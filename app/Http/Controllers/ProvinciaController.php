@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Resources\Provincia as ProvinciaResource;
 
-class ProvinciaController extends Controller
+class ProvinciaController extends BaseController
 {
     public function index()
     {
@@ -21,6 +21,17 @@ class ProvinciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
     public function store(Request $request)
     {
         $input = $request->all();
