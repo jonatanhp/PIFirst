@@ -1,31 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Area;
+use App\Http\Controllers\BaseController as BaseController;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Http\Resources\Area as AreaResource;
 
-class AreaController extends Controller
+class AreaController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $areas = Area::all();
+    
+        return $this->sendResponse(AreaResource::collection($areas), 'Areas retrieved successfully.');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -34,9 +23,23 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
+        $input = $request->all();
+   
+        $validator = Validator::make($input, [
+            'cod_area' => 'required',
+            'nom_area' => 'required'
+            
+        ]);
+   
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());       
+        }
+   
+        $area = Area::create($input);
+   
+        return $this->sendResponse(new AreaResource($area), 'Area created successfully.');
+    } 
+   
     /**
      * Display the specified resource.
      *
@@ -45,10 +48,16 @@ class AreaController extends Controller
      */
     public function show($id)
     {
-        //
+        $area = Area::find($id);
+  
+        if (is_null($area)) {
+            return $this->sendError('Area not found.');
+        }
+   
+        return $this->sendResponse(new AreaResource($area), 'Area retrieved successfully.');
     }
 
-    /**
+       /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -58,7 +67,7 @@ class AreaController extends Controller
     {
         //
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -66,19 +75,38 @@ class AreaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Area $area)
     {
-        //
+        $input = $request->all();
+   
+        $validator = Validator::make($input, [
+            'cod_area' => 'required',
+            'nom_area' => 'required'
+        ]);
+   
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());       
+        }
+   
+        $area->nom_dep = $input['cod_area'];
+        $area->nom_area = $input['nom_area'];
+        $area->save();
+   
+        return $this->sendResponse(new AreaResource($area), 'Area updated successfully.');
     }
-
+   
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Area $area)
     {
-        //
+        $area->delete();
+   
+        return $this->sendResponse([], 'Area deleted successfully.');
     }
+    
+
 }

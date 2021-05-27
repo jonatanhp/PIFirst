@@ -15,6 +15,14 @@ class CreateCursosTable extends Migration
     {
         Schema::create('cursos', function (Blueprint $table) {
             $table->id();
+            $table->string('cod_curso');
+            $table->string('nom_curso');
+            $table->double('nota_max',10,3);
+            $table->integer('num_horas_p');
+            $table->integer('nom_horas_np');
+            $table->string('estado_curso', 1);
+            $table->unsignedBigInteger('area_id')->nullable();
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('set null');
             $table->timestamps();
         });
     }

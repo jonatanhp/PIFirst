@@ -15,6 +15,9 @@ class CreateSeccionsTable extends Migration
     {
         Schema::create('seccions', function (Blueprint $table) {
             $table->id();
+            $table->string('nom_seccion');
+            $table->unsignedBigInteger('grado_id')->nullable;
+            $table->foreign('grado_id')->references('id')->on('grados')->onDelete('set null');
             $table->timestamps();
         });
     }

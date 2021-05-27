@@ -15,6 +15,15 @@ class CreateDocentesTable extends Migration
     {
         Schema::create('docentes', function (Blueprint $table) {
             $table->id();
+            $table->string('cod_docente',10);
+            $table->string('nom_docente',20);
+            $table->string('pat_docente',30);
+            $table->string('mat_docente',30);
+            $table->string('dni_docente',8);
+            $table->string('email_docente',50);
+            $table->string('tel_docente',12);
+            $table->string('sexo_docente',1);
+            $table->date('f_nac_docente');
             $table->timestamps();
         });
     }

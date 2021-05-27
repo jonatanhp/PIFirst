@@ -15,6 +15,9 @@ class CreateGradosTable extends Migration
     {
         Schema::create('grados', function (Blueprint $table) {
             $table->id();
+            $table->string('nom_grado');
+            $table->unsignedBigInteger('nivel_id')->nullable;
+            $table->foreign('nivel_id')->references('id')->on('nivels')->onDelete('set null');
             $table->timestamps();
         });
     }
